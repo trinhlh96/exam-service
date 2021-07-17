@@ -26,7 +26,7 @@ public class ProductService {
         return productRepository.findAll();
     }
     @WebMethod
-    public Product sellProduct(long id, int quantity) {
+    public Product sellProduct(Long id, int quantity) {
         Product existProduct = productRepository.findById(id).orElse(null);
         if (existProduct != null && existProduct.getQuantity() > quantity){
             existProduct.setQuantity(existProduct.getQuantity() - quantity);
@@ -37,7 +37,10 @@ public class ProductService {
     }
     @WebMethod
     public Product findById(Long id){
-     Optional<Product> product = productRepository.findById(id);
+     Optional<Product> productOptional = productRepository.findById(id);
+     if(productOptional.isPresent()){
+         return productOptional.get();
+     }
         return null;
     }
 }
